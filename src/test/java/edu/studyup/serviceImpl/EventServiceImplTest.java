@@ -76,4 +76,25 @@ class EventServiceImplTest {
 		  });
 	}
 	
+	//HW 2
+	//Test if it throws exception when the length of the name is more than 20
+	@Test
+	void testUpdateEventName_NameLength_GoodCase_NameLengthGreaterThanTwenty() {
+		Assertions.assertThrows(StudyUpException.class, () -> {
+			eventServiceImpl.updateEventName(1, "This name is too long for the function");
+		  });
+	}
+	
+	//Test if it throws exception when the length of the name is 20
+	@Test
+	void testUpdateEventName_NameLength_GoodCase_NameLengthEqualsToTwenty() {
+		Assertions.assertDoesNotThrow(() -> eventServiceImpl.updateEventName(1, "This is twenty words"));		
+	}
+	
+
+	//Test if it throws exception when the length of the name is 20
+	@Test
+	void testUpdateEventName_NameLength_GoodCase_NameLengthLessThanTwenty() {
+		Assertions.assertDoesNotThrow(() -> eventServiceImpl.updateEventName(1, "This is ten words"));		
+	}
 }
