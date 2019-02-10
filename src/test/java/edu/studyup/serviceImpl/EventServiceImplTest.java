@@ -2,8 +2,13 @@ package edu.studyup.serviceImpl;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.security.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
@@ -55,6 +60,7 @@ class EventServiceImplTest {
 		
 		DataStorage.eventData.put(event.getEventID(), event);
 	}
+		
 
 	@AfterEach
 	void tearDown() throws Exception {
@@ -84,17 +90,53 @@ class EventServiceImplTest {
 			eventServiceImpl.updateEventName(1, "This name is too long for the function");
 		  });
 	}
-	
+	@Test
+	void testUpdateEventName_NameLength_BadCase_NameLengthGreaterThanTwenty() {
+		Assertions.assertDoesNotThrow(() -> {
+			eventServiceImpl.updateEventName(1, "This name is too long for the function");
+		  });
+	}
 	//Test if it throws exception when the length of the name is 20
 	@Test
 	void testUpdateEventName_NameLength_GoodCase_NameLengthEqualsToTwenty() {
 		Assertions.assertDoesNotThrow(() -> eventServiceImpl.updateEventName(1, "This is twenty words"));		
 	}
 	
-
+	@Test 
+	void testUpdateEventName_NameLength_BadCase_NameLengthEqualsToTwenty() {
+		Assertions.assertThrows(StudyUpException.class, () -> {eventServiceImpl.updateEventName(1, "This is twenty words");});
+	}
 	//Test if it throws exception when the length of the name is 20
 	@Test
 	void testUpdateEventName_NameLength_GoodCase_NameLengthLessThanTwenty() {
 		Assertions.assertDoesNotThrow(() -> eventServiceImpl.updateEventName(1, "This is ten words"));		
+	}
+	
+	@Test
+	void testUpdateEventName_NameLength_BadCase_NameLengthLessThanTwenty() {
+		Assertions.assertThrows(StudyUpException.class, () -> {eventServiceImpl.updateEventName(1, "This is ten words");});
+	}
+	
+	//test if future event is active.
+	@Test
+	void testGetActiveEvent_GoodCase() {
+		Calendar myCalendar = new GregorianCalendar(2033, 2, 11);
+		Date myDate = myCalendar.getTime();
+		List<Event> activeEvents = eventServiceImpl.getActiveEvents();
+		activeEvents.get(0).setDate(myDate);
+		for (int i = 0; i < activeEvents.size(); i++) {
+			assertTrue(activeEvents.get(i).getDate().compareTo(new Date()) >= 0);
+		}
+	}
+
+	@Test
+	void testGetActiveEvent_BadCase() {
+		Calendar myCalendar = new GregorianCalendar(2000, 2, 11);
+		Date myDate = myCalendar.getTime();
+		List<Event> activeEvents = eventServiceImpl.getActiveEvents();
+		activeEvents.get(0).setDate(myDate);
+		for (int i = 0; i < activeEvents.size(); i++) {
+			assertTrue(activeEvents.get(i).getDate().compareTo(new Date()) >= 0);
+		}
 	}
 }
