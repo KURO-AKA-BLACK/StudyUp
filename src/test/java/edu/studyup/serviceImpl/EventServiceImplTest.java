@@ -79,6 +79,7 @@ class EventServiceImplTest {
 		  });
 	}
 	
+	// expected a throw with students size larger than 2
 	@Test
 	void testAddstudent_size_BadCase() throws StudyUpException {
 		int eventID = 1;
@@ -97,25 +98,10 @@ class EventServiceImplTest {
 			eventServiceImpl.addStudentToEvent(li, eventID);
 		});
 	}
-	// if students size is larger than 2 (maximal is 2)
-//	void testAddstudent_size_BadCase() throws StudyUpException {
-//		int eventID = 1;
-//		Student han = new Student();
-//		han.setFirstName("Meimei");
-//		han.setLastName("Han");
-//		han.setEmail("hm@email.com");
-//		han.setId(2);
-//		Student li = new Student();
-//		han.setFirstName("Bai");
-//		han.setLastName("Li");
-//		han.setEmail("lb@email.com");
-//		han.setId(3);
-//		eventServiceImpl.addStudentToEvent(li,eventID);
-//		assertTrue("Students size is larger than 2", DataStorage.eventData.get(eventID).getStudents().size() > 2);
-//	}
+
 	
 	@Test
-	// if students size is equal to 2 (maximal is 2)
+	// don't expect a throw with students size equal to 2
 	void testAddstudent_size_GoodCase() throws StudyUpException {
 		int eventID = 1;
 		Student han = new Student();
@@ -170,6 +156,7 @@ class EventServiceImplTest {
 	}
 	
 	@Test
+	// test if pastEvent is retrieved as expected
 	void testPastEvents_GoodCase() {
 		
 		Student student = new Student();
