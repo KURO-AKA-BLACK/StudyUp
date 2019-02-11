@@ -117,6 +117,7 @@ class EventServiceImplTest {
 		});
 	}
 	
+		//Test if it throws exception if event == null
 	@Test
 	void testAddStudent_eventEqualnull() {
 		int eventID = 1;
@@ -130,7 +131,7 @@ class EventServiceImplTest {
 			eventServiceImpl.addStudentToEvent(han,eventID);
 		  });
 	}
-	
+	//Test if it still work if presentStudent == null
 	@Test
 	void testAddStudent_presentStudentEqualnull() {
 		Student han = new Student();
@@ -144,6 +145,7 @@ class EventServiceImplTest {
 			eventServiceImpl.addStudentToEvent(han,1);
 		  });
 	}
+	
 	
 	
 	
@@ -183,56 +185,53 @@ class EventServiceImplTest {
 	}
 	
 	@Test
-	void testUpdateEventName_NameLength_GoodCase_NameLengthGreaterThanTwenty() {
+	void testUpdateEventName_NameLengthGreaterThanTwenty_expect_exception() {
 		Assertions.assertThrows(StudyUpException.class, () -> {
 			eventServiceImpl.updateEventName(1, "This name is too long for the function");
 		  });
 	}
-	@Test
-	void testUpdateEventName_NameLength_BadCase_NameLengthGreaterThanTwenty() {
+	/*@Test
+	void testUpdateEventName_NameLengthGreaterThanTwenty_Not_expect_exception() {
 		Assertions.assertDoesNotThrow(() -> {
 			eventServiceImpl.updateEventName(1, "This name is too long for the function");
 		  });
-	}
+	}*/
 	//Test if it throws exception when the length of the name is 20
 	@Test
-	void testUpdateEventName_NameLength_GoodCase_NameLengthEqualsToTwenty() {
+	void testUpdateEventName_NameLengthEqualsToTwenty_Not_Expect_Exception() {
 		Assertions.assertDoesNotThrow(() -> eventServiceImpl.updateEventName(1, "This is twenty words"));		
 	}
 	
-	@Test 
+	/*@Test 
 	void testUpdateEventName_NameLength_BadCase_NameLengthEqualsToTwenty() {
 		Assertions.assertThrows(StudyUpException.class, () -> {eventServiceImpl.updateEventName(1, "This is twenty words");});
-	}
+	}*/
 	//Test if it throws exception when the length of the name is 20		
 	@Test
-	void testUpdateEventName_NameLength_GoodCase_NameLengthLessThanTwenty() {
+	void testUpdateEventName_NameLengthLessThanTwenty_Not_Expect_Exception() {
 		Assertions.assertDoesNotThrow(() -> eventServiceImpl.updateEventName(1, "This is ten words"));		
 	}
 		
-	@Test
+	/*@Test
 	void testUpdateEventName_NameLength_BadCase_NameLengthLessThanTwenty() {
 		Assertions.assertThrows(StudyUpException.class, () -> {eventServiceImpl.updateEventName(1, "This is ten words");});
-	}
+	}*/
 		
 	//test if future event is active.	
 	@Test
-	void testGetActiveEvent_GoodCase() {
+	void testGetActiveEvent_future_Not_expect_exception() {
 		Date myDate = new Date(421412412341241234L);
 		List<Event> activeEvents = eventServiceImpl.getActiveEvents();
 		activeEvents.get(0).setDate(myDate);
 		assert(activeEvents.size() == 1);
 	}
-
+	//test if past event is active
 	@Test
-	void testGetActiveEvent_BadCase() {
+	void testGetActiveEvent_past_Not_expect_exception() {
 		Date myDate = new Date(1L);
 		List<Event> activeEvents = eventServiceImpl.getActiveEvents();
 		activeEvents.get(0).setDate(myDate);
 		assert(activeEvents.size() == 0);
-		/*for (int i = 0; i < activeEvents.size(); i++) {
-			assertTrue(activeEvents.get(i).getDate().compareTo(new Date()) >= 0);
-		}*/
 	}
 	
 	
