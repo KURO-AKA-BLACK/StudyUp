@@ -185,7 +185,7 @@ class EventServiceImplTest {
 	}
 	
 	@Test
-	void testUpdateEventName_NameLengthGreaterThanTwenty_expect_exception() {
+	void testUpdateEventName_NameLengthGreaterThanTwenty_Not_expect_exception() {
 		Assertions.assertThrows(StudyUpException.class, () -> {
 			eventServiceImpl.updateEventName(1, "This name is too long for the function");
 		  });
