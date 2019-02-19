@@ -219,16 +219,18 @@ class EventServiceImplTest {
 	@Test
 	void testGetActiveEvent_future_Not_expect_exception() {
 		Date myDate = new Date(421412412341241234L);
+		Event event = DataStorage.eventData.get(1);
+		event.setDate(myDate);	
 		List<Event> activeEvents = eventServiceImpl.getActiveEvents();
-		activeEvents.get(0).setDate(myDate);
 		assert(activeEvents.size() == 1);
 	}
 	//test if past event is active
 	@Test
 	void testGetActiveEvent_past_Not_expect_exception() {
-		Date myDate = new Date(1L);
+		Date myDate = new Date(0L);
+		Event event = DataStorage.eventData.get(1);
+		event.setDate(myDate);	
 		List<Event> activeEvents = eventServiceImpl.getActiveEvents();
-		activeEvents.get(0).setDate(myDate);
 		assert(activeEvents.size() == 0);
 	}
 	

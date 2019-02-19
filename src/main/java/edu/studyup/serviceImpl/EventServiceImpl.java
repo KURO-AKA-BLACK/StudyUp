@@ -21,7 +21,7 @@ public class EventServiceImpl implements EventService {
 			throw new StudyUpException("No event found.");
 		}
 
-		if(name.length() >= 20) {
+		if(name.length() > 20) {
 			throw new StudyUpException("Length too long. Maximun is 20");
 		}
 		event.setName(name);
@@ -36,7 +36,13 @@ public class EventServiceImpl implements EventService {
 		List<Event> activeEvents = new ArrayList<>();
 		
 		for (Entry<Integer, Event> event : eventData.entrySet()) {
-			activeEvents.add((Event) event);
+			System.out.println(event.getValue().getDate());
+			if (event.getValue().getDate().before(new Date())) {
+				continue;
+			}
+			else {
+				activeEvents.add(event.getValue());
+			}
 		}
 		return activeEvents;
 	}
@@ -49,9 +55,10 @@ public class EventServiceImpl implements EventService {
 		for (Entry<Integer, Event> key : eventData.entrySet()) {
 			//Event ithEvent= eventData.get(key);
 			// Checks if an event date is before today, if yes, then add to the past event list.
-			if(((Event)key).getDate().before(new Date())) {
-				pastEvents.add((Event) key);
+			if(key.getValue().getDate().before(new Date())) {
+				pastEvents.add(key.getValue());
 			}
+			//System.out.println(key.getValue().getDate());
 		}
 		return pastEvents;
 	}
@@ -65,6 +72,9 @@ public class EventServiceImpl implements EventService {
 		List<Student> presentStudents = event.getStudents();
 		if(presentStudents == null) {
 			presentStudents = new ArrayList<>();
+		}
+		if (presentStudents.size() >= 2) {
+			throw new StudyUpException("event already has two or more students");
 		}
 		presentStudents.add(student);
 		event.setStudents(presentStudents);		
