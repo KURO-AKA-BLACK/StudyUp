@@ -36,7 +36,6 @@ public class EventServiceImpl implements EventService {
 		List<Event> activeEvents = new ArrayList<>();
 		
 		for (Entry<Integer, Event> event : eventData.entrySet()) {
-			System.out.println(event.getValue().getDate());
 			if (event.getValue().getDate().before(new Date())) {
 				continue;
 			}

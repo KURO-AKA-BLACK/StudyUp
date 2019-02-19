@@ -158,28 +158,11 @@ class EventServiceImplTest {
 	@Test
 	// test if pastEvent is retrieved as expected
 	void testPastEvents_GoodCase() {
-		
-		Student student = new Student();
-		student.setFirstName("h");
-		student.setLastName("t");
-		student.setEmail("ht@email.com");
-		student.setId(2);
-		
-		Event event2 = new Event();
-		event2.setEventID(2);
-		event2.setDate(new Date(2323223233L));
-		event2.setName("Event 2");
-		Location location = new Location(-122, 37);
-		event2.setLocation(location);
-		List<Student> eventStudents = new ArrayList<>();
-		eventStudents.add(student);
-		event2.setStudents(eventStudents);
-		
-		DataStorage.eventData.put(event2.getEventID(), event2);
-		
-		List<Event> pastEvent = new ArrayList<>();
-		pastEvent.add(event2);
-		assertEquals(pastEvent, eventServiceImpl.getPastEvents());
+		Event event = DataStorage.eventData.get(1);
+		Date myDate = new Date(421412412341241234L);
+		event.setDate(myDate);
+		int size = eventServiceImpl.getPastEvents().size();
+		assert(size == 0);
 	}
 	
 	@Test
@@ -227,7 +210,7 @@ class EventServiceImplTest {
 	//test if past event is active
 	@Test
 	void testGetActiveEvent_past_Not_expect_exception() {
-		Date myDate = new Date(0L);
+		Date myDate = new Date(2L);
 		Event event = DataStorage.eventData.get(1);
 		event.setDate(myDate);	
 		List<Event> activeEvents = eventServiceImpl.getActiveEvents();
