@@ -34,8 +34,8 @@
 				<version>3.8.0</version>
 				<configuration>
 					<release>11</release>
-					<source>${java.version}</source>
-       				<target>${java.version}</target>
+					<source>1.8</source>
+       				<target>1.8</target>
         			<compilerVersion>${java.version}</compilerVersion>
         			<encoding>UTF-8</encoding>
 				</configuration>
